@@ -6,7 +6,7 @@
 /*   By: nterol <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 10:00:23 by nterol            #+#    #+#             */
-/*   Updated: 2017/02/16 18:51:43 by nterol           ###   ########.fr       */
+/*   Updated: 2017/02/16 23:51:03 by nterol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,27 @@ int				check_n_fill(char **line, char **tmp)
 int				get_next_line(const int fd, char **line)
 {
 	int			ret;
-	static char	*tmp = NULL;
+	static char	*tmp[FD_SIZE] = {0};
 	char		buf[BUFF_SIZE + 1];
 
-	!tmp ? tmp = ft_strnew(0) : 0;
-	if ((fd < 0 || line == NULL || read(fd, buf, 0) < 0))
+	if ((fd < 0 || !line || (read(fd, buf, 0) < 0)))
 		return (-1);
+	!tmp[fd] ? tmp[fd] = ft_strnew(0) : 0;
 	*line = ft_strnew(0);
-	if (check_n_fill(line, &tmp) == 1)
+	if (check_n_fill(line, &tmp[fd]) == 1)
 		return (1);
 	while ((ret = read(fd, buf, BUFF_SIZE)))
 	{
 		buf[ret] = '\0';
-		tmp = ft_strjoin(tmp, buf);
-		if (check_n_fill(line, &tmp) == 1)
+		tmp[fd] = ft_strjoin(tmp[fd], buf);
+		if (check_n_fill(line, &tmp[fd]) == 1)
 			return (1);
 	}
-	if (ft_strcmp(tmp, ""))
+	if (ft_strcmp(tmp[fd], ""))
 	{
-		*line = ft_strdup(tmp);
-		tmp = NULL;
-		free(tmp);
+		*line = ft_strdup(tmp[fd]);
+		tmp[fd] = NULL;
+		free(tmp[fd]);
 		return (1);
 	}
 	return (0);
