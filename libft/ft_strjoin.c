@@ -6,7 +6,7 @@
 /*   By: nterol <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 17:53:44 by nterol            #+#    #+#             */
-/*   Updated: 2017/02/08 12:15:00 by nterol           ###   ########.fr       */
+/*   Updated: 2017/01/31 18:33:36 by nterol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_strjoin(char const *s1, const char *s2)
 	if (!s1 || !s2)
 		return (NULL);
 	len = (ft_strlen(s1) + ft_strlen(s2) + 1);
-	join = ft_strnew(len); 
+	join = ft_strnew(len);
 	if (!join)
 		return (NULL);
 	while (s1[i])
